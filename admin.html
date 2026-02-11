@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Upload Project</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-xl">
+  <h2 class="text-2xl font-bold mb-6 text-center">Upload New Project</h2>
+
+  <form id="projectForm" class="space-y-4">
+
+    <input type="text" id="title" placeholder="Project Title"
+      class="w-full p-3 border rounded-lg" required>
+
+    <textarea id="description" placeholder="Project Description"
+      class="w-full p-3 border rounded-lg" required></textarea>
+
+    <input type="text" id="tech" placeholder="Tech (comma separated e.g. HTML, JS, Python)"
+      class="w-full p-3 border rounded-lg">
+
+    <input type="url" id="video"
+      placeholder="Video URL (Optional)"
+      class="w-full p-3 border rounded-lg">
+
+    <input type="file" id="fileInput"
+      class="w-full p-3 border rounded-lg" accept="image/*,video/*" required>
+
+    <button type="submit"
+      class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800">
+      Upload Project
+    </button>
+
+  </form>
+
+  <p id="status" class="text-center mt-4 font-semibold"></p>
+</div>
+
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyioNxRkJgxzyVNakfRzCuq2R_68Knlj7D8cwFy8UdM_LKCEldIqYU8Bb_8ay0cTsRK9A/exec";
+
+document.getElementById("projectForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const status = document.getElementById("status");
+  status.innerText = "Uploading...";
+  status.className = "text-blue-600 text-center mt-4 font-semibold";
+
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const tech = document.getElementById("tech").value;
+  const video = document.getElementById("video").value;
+  const file = document.getElementById("fileInput").files[0];
+
+  if (!file) {
+    status.innerText = "Please select a file.";
+    status.className = "text-red-600 text-center mt-4 font-semibold";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = async function() {
+
+    const base64Data = reader.result.split(",")[1];
+
+    try {
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          tech: tech,
+          videoUrl: video,
+          fileName: file.name,
+          fileType: file.type,
+          fileBase64: base64Data
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        status.innerText = "Project Uploaded Successfully 🚀";
+        status.className = "text-green-600 text-center mt-4 font-semibold";
+        document.getElementById("projectForm").reset();
+      } else {
+        status.innerText = "Upload Failed!";
+        status.className = "text-red-600 text-center mt-4 font-semibold";
+      }
+
+    } catch (error) {
+      status.innerText = "Error: " + error;
+      status.className = "text-red-600 text-center mt-4 font-semibold";
+    }
+
+  };
+
+  reader.readAsDataURL(file);
+});
+
+</script>
+
+</body>
+</html>

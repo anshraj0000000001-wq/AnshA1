@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansh Raj - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .nav-btn.active-btn {
+            background-color: #0f172a; 
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-900 overflow-x-hidden selection:bg-blue-100 selection:text-blue-700">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 pointer-events-none -z-20 overflow-hidden">
+        <div class="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-blue-100/50 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-5%] left-[-5%] w-[30vw] h-[30vw] bg-purple-100/50 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Header / Navigation -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-4 py-8">
+        <nav class="max-w-4xl mx-auto flex items-center justify-between p-2 rounded-2xl md:rounded-full border border-slate-200/40 bg-white/40 backdrop-blur-md transition-all duration-300">
+            <div class="flex items-center gap-3 pl-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl md:rounded-full flex items-center justify-center text-white shadow-lg">
+                    <span class="font-black text-lg">A</span>
+                </div>
+                <span class="font-black tracking-tight text-lg hidden sm:block">Ansh Raj</span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-2 pr-2">
+                <button onclick="switchTab('home')" class="nav-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all active-btn" data-tab="home">Home</button>
+                <button onclick="switchTab('about')" class="nav-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all text-slate-500 hover:text-slate-900" data-tab="about">About</button>
+                <button onclick="switchTab('development')" class="nav-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all text-slate-500 hover:text-slate-900" data-tab="development">Development</button>
+                <button onclick="switchTab('projects')" class="nav-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all text-slate-500 hover:text-slate-900" data-tab="projects">Projects</button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="md:hidden pr-2">
+                <button onclick="toggleMobileMenu()" class="p-2 text-slate-600 hover:bg-slate-100 rounded-xl">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-xl border border-slate-200 p-4 rounded-3xl shadow-2xl">
+            <div class="flex flex-col gap-2">
+                <button onclick="switchTab('home')" class="mobile-nav-btn w-full text-left px-6 py-4 rounded-2xl font-bold bg-slate-900 text-white" data-tab="home">Home</button>
+                <button onclick="switchTab('about')" class="mobile-nav-btn w-full text-left px-6 py-4 rounded-2xl font-bold text-slate-500 hover:bg-slate-50" data-tab="about">About</button>
+                <button onclick="switchTab('development')" class="mobile-nav-btn w-full text-left px-6 py-4 rounded-2xl font-bold text-slate-500 hover:bg-slate-50" data-tab="development">Development</button>
+                <button onclick="switchTab('projects')" class="mobile-nav-btn w-full text-left px-6 py-4 rounded-2xl font-bold text-slate-500 hover:bg-slate-50" data-tab="projects">Projects</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto pt-40 pb-24 min-h-[70vh]">
+        
+        <!-- HOME TAB -->
+        <section id="home" class="tab-content active fade-in space-y-20">
+            <div class="relative text-center pt-10 pb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8">
+                    <i data-lucide="sparkles" class="text-yellow-500 w-4 h-4"></i>
+                    <span class="text-sm font-semibold text-slate-700">Available for Projects</span>
+                </div>
+                <h1 class="text-5xl md:text-8xl font-black text-slate-900 tracking-tight mb-8">
+                    Development can change a <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Country.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-10 px-4">
+                    My name is <span class="font-bold text-slate-900">Ansh Raj from simuara,tekari, gaya(bihar) india</span>. I am a software developer who believes in creating significant impact through technology.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 px-4">
+                    <button onclick="switchTab('projects')" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2">
+                        View My Work <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="switchTab('about')" class="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-bold hover:bg-slate-50 transition-all">
+                        About Me
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Info Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+                <a href="https://www.google.com/maps/search/?api=1&query=XR9G%2B338%20Simuara%2C%20Bihar" target="_blank" class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group block">
+                    <div class="w-12 h-12 bg-blue-50 group-hover:bg-blue-600 group-hover:text-white rounded-xl flex items-center justify-center text-blue-600 mb-6 transition-all">
+                        <i data-lucide="map-pin"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 flex items-center gap-2">Location <i data-lucide="external-link" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i></h3>
+                    <p class="text-slate-500 leading-relaxed">Simuara, Tekari, (Gaya) Bihar, India</p>
+                </a>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white rounded-xl flex items-center justify-center text-indigo-600 mb-6 transition-all">
+                        <i data-lucide="code"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Passion</h3>
+                    <p class="text-slate-500 leading-relaxed">Coding, Algorithms, & Digital Architecture</p>
+                </div>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 bg-purple-50 group-hover:bg-purple-600 group-hover:text-white rounded-xl flex items-center justify-center text-purple-600 mb-6 transition-all">
+                        <i data-lucide="cpu"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Interests</h3>
+                    <p class="text-slate-500 leading-relaxed">Artificial Intelligence & Deep Learning</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT TAB -->
+        <section id="about" class="tab-content fade-in max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl font-black mb-12 flex items-center gap-4">
+                <span class="w-12 h-1 bg-blue-600 rounded-full"></span>
+                The Story So Far
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <div class="space-y-6">
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        Greetings! I am <span class="font-bold text-slate-900">Ansh Raj</span>. A programmer from Gaya, Bihar, who thrives on solving complex problems.
+                    </p>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        I started my journey with HTML and CSS, but today I have dived deep into the world of AI and Machine Learning.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-6">
+                    <h3 class="font-bold text-xl">My Skills</h3>
+                    <div class="space-y-4" id="skills-list">
+                        <!-- Skills rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEVELOPMENT TAB -->
+        <section id="development" class="tab-content fade-in max-w-4xl mx-auto px-4">
+            <div class="bg-slate-900 rounded-[3rem] p-8 md:p-20 text-white relative overflow-hidden shadow-2xl">
+                <h2 class="text-3xl md:text-5xl font-black mb-10 leading-tight">
+                    Development is Important for a <span class="text-blue-400 underline decoration-blue-400/30 underline-offset-8">Country</span>
+                </h2>
+                <div class="space-y-8 text-slate-300 text-lg leading-relaxed">
+                    <p>The identity of any nation is defined by its development. In this modern era, development implies Technological Sovereignty.</p>
+                    <div class="p-8 bg-white/5 border border-white/10 rounded-2xl italic">
+                        "When the youth of India master coding and AI, only then can we realize the dream of a 'Developed India'."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS TAB -->
+        <section id="projects" class="tab-content fade-in px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+                <h2 class="text-4xl font-black">Featured Projects</h2>
+            </div>
+            <div id="loading-spinner" class="flex justify-center py-20 hidden">
+                <div class="loader"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                <!-- Dynamic Projects from API -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto border-t border-slate-200 px-6 py-12 mt-20">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div>
+                <div class="flex items-center gap-2 justify-center md:justify-start mb-4">
+                    <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-xs">AR</div>
+                    <span class="font-black text-xl">Ansh Raj</span>
+                </div>
+                <p class="text-slate-400 text-sm max-w-xs">From Simuara to the digital world, a small step towards impact.</p>
+            </div>
+            
+            <div class="flex gap-4">
+                <a href="https://github.com/anshraj0000000001-wq" target="_blank" class="p-4 bg-white border border-slate-200 rounded-2xl hover:border-blue-500 hover:text-blue-500 transition-all shadow-sm">
+                    <i data-lucide="github"></i>
+                </a>
+                <a href="#" class="p-4 bg-white border border-slate-200 rounded-2xl hover:border-blue-500 hover:text-blue-500 transition-all shadow-sm">
+                    <i data-lucide="linkedin"></i>
+                </a>
+                <a href="mailto:ansh0000000001@gmail.com" class="p-4 bg-white border border-slate-200 rounded-2xl hover:border-blue-500 hover:text-blue-500 transition-all shadow-sm">
+                    <i data-lucide="mail"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mt-12 text-center text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">
+            ©2025 Ansh Raj • Designed & Developed by Ansh Raj
+        </div>
+    </footer>
+
+    <script>
+        // Skills Data
+        const skills = [
+            { name: "Python", level: "90%", color: "bg-blue-500", icon: "terminal" },
+            { name: "JavaScript", level: "85%", color: "bg-yellow-400", icon: "code" },
+            { name: "C++", level: "80%", color: "bg-indigo-500", icon: "database" },
+            { name: "HTML & CSS", level: "95%", color: "bg-orange-500", icon: "layout" },
+            { name: "AI & ML", level: "75%", color: "bg-purple-600", icon: "cpu" }
+        ];
+
+        // Render Skills
+        const skillsList = document.getElementById('skills-list');
+        skills.forEach(skill => {
+            skillsList.innerHTML += `
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-sm font-bold">
+                        <span class="flex items-center gap-2"><i data-lucide="${skill.icon}" class="w-4 h-4"></i> ${skill.name}</span>
+                        <span class="text-slate-400">${skill.level}</span>
+                    </div>
+                    <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div class="h-full ${skill.color}" style="width: ${skill.level}"></div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Dynamic Projects Logic
+        const API_URL = "https://script.google.com/macros/s/AKfycbyioNxRkJgxzyVNakfRzCuq2R_68Knlj7D8cwFy8UdM_LKCEldIqYU8Bb_8ay0cTsRK9A/exec";
+        let projectsFetched = false;
+
+        function fetchProjects() {
+            if (projectsFetched) return;
+            
+            const grid = document.getElementById('projects-grid');
+            const spinner = document.getElementById('loading-spinner');
+            
+            spinner.classList.remove('hidden');
+            grid.innerHTML = "";
+
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    spinner.classList.add('hidden');
+                    data.slice(1).forEach(row => {
+                        const [title, description, tech, image, video] = row;
+                        const techArray = tech ? tech.split(',').map(t => t.trim()) : [];
+                        
+                        grid.innerHTML += `
+                            <div class="group bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                                <div class="h-48 overflow-hidden relative">
+                                    <img src="${image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800'}" alt="${title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                </div>
+                                <div class="p-8">
+                                    <h3 class="text-xl font-black mb-3 group-hover:text-blue-600 transition-colors">${title}</h3>
+                                    <p class="text-slate-500 text-sm mb-6 leading-relaxed line-clamp-2">${description}</p>
+                                    <div class="flex flex-wrap gap-2 mb-8">
+                                        ${techArray.map(t => `<span class="px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] font-black uppercase text-slate-400">${t}</span>`).join('')}
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        ${video ? `<a href="${video}" target="_blank" class="text-blue-600 font-bold text-sm inline-flex items-center gap-1 hover:underline"><i data-lucide="play-circle" class="w-4 h-4"></i> Watch Video</a>` : ''}
+                                        <a href="https://github.com/anshraj0000000001-wq" target="_blank" class="text-slate-900 font-bold text-sm inline-flex items-center gap-1 hover:text-blue-600 transition-colors">
+                                            <i data-lucide="github" class="w-4 h-4"></i> Code
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    lucide.createIcons();
+                    projectsFetched = true;
+                })
+                .catch(err => {
+                    console.error(err);
+                    spinner.classList.add('hidden');
+                    grid.innerHTML = `<p class="col-span-full text-center text-red-500 font-bold">Failed to load projects.</p>`;
+                });
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update Active Buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.tab === tabId) {
+                    btn.classList.add('active-btn');
+                    btn.classList.remove('text-slate-500');
+                } else {
+                    btn.classList.remove('active-btn');
+                    btn.classList.add('text-slate-500');
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                if(btn.dataset.tab === tabId) {
+                    btn.classList.add('bg-slate-900', 'text-white');
+                    btn.classList.remove('text-slate-500');
+                } else {
+                    btn.classList.remove('bg-slate-900', 'text-white');
+                    btn.classList.add('text-slate-500');
+                }
+            });
+
+            if (tabId === 'projects') fetchProjects();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            icon.setAttribute('data-lucide', menu.classList.contains('hidden') ? 'menu' : 'x');
+            lucide.createIcons();
+        }
+
+        // Scroll listener for sticky header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 20) {
+                header.classList.add('nav-scrolled');
+            } else {
+                header.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
